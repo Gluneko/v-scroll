@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v-scroll demo</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "$/": "/theme/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main class="app">
+      <h1>原生 v-scroll 组件演示</h1>
+      <section class="panel">
+        <h2>长列表（可滚动）</h2>
+        <v-scroll id="demo-a" class="box"></v-scroll>
+      </section>
+      <section class="panel">
+        <h2>短内容（无滚动条）</h2>
+        <v-scroll id="demo-b" class="box box-sm">
+          <p>只有几行内容时，自定义滚动条会自动隐藏。</p>
+          <p>ResizeObserver 会持续探测高度差值。</p>
+        </v-scroll>
+      </section>
+      <section class="panel">
+        <h2>动态内容</h2>
+        <button id="append-btn" type="button">追加 10 行</button>
+        <v-scroll id="demo-c" class="box"></v-scroll>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

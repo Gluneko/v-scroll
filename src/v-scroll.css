@@ -1,0 +1,97 @@
+:host {
+  --vs-track-width: 14px;
+  --vs-track-right: 2px;
+  --vs-track-pad: 3px;
+  --vs-thumb-width: 6px;
+  --vs-thumb-width-active: 10px;
+  --vs-thumb-min-height: 16px;
+  --vs-thumb-radius: 999px;
+  --vs-thumb-bg: #c2c2c2;
+  --vs-thumb-bg-hover: #909090;
+  --vs-thumb-bg-drag: #787878;
+  --vs-track-bg: transparent;
+  --vs-track-bg-active: #f1f1f1;
+  position: relative;
+  display: block;
+  contain: layout style paint;
+}
+
+b {
+  font-weight: normal;
+}
+
+slot {
+  display: contents;
+}
+
+:host([data-overflow="0"]) .bar {
+  pointer-events: none;
+}
+
+.scroll {
+  position: relative;
+  block-size: 100%;
+  inline-size: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  display: flex;
+  flex-direction: column;
+
+  &::-webkit-scrollbar {
+    inline-size: 0;
+    block-size: 0;
+  }
+}
+
+.inner {
+  min-block-size: 100%;
+  flex-shrink: 0;
+  display: block;
+}
+
+.bar {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: var(--vs-track-right);
+  inline-size: var(--vs-track-width);
+  border-radius: var(--vs-thumb-radius);
+  background: var(--vs-track-bg);
+  cursor: var(--svgScroll, ns-resize);
+  opacity: 0;
+  transition: opacity 200ms ease, background 160ms ease;
+
+  & .thumb {
+    position: absolute;
+    inset-inline-end: 2px;
+    inset-block-start: var(--vs-track-pad);
+    inline-size: var(--vs-thumb-width);
+    block-size: var(--vs-thumb-min-height);
+    border-radius: var(--vs-thumb-radius);
+    background: var(--vs-thumb-bg);
+    cursor: var(--svgScroll, ns-resize);
+    transition: background 160ms ease, inline-size 160ms ease;
+    will-change: transform, block-size;
+  }
+
+  &:hover {
+    background: var(--vs-track-bg-active);
+
+    & .thumb {
+      inline-size: var(--vs-thumb-width-active);
+      background: var(--vs-thumb-bg-hover);
+    }
+  }
+}
+
+:host([data-dragging="1"]) .bar {
+  background: var(--vs-track-bg-active);
+  cursor: var(--svgGrab, grabbing);
+
+  & .thumb {
+    inline-size: var(--vs-thumb-width-active);
+    background: var(--vs-thumb-bg-drag);
+    cursor: var(--svgGrab, grabbing);
+  }
+}
