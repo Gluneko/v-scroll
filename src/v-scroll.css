@@ -2,13 +2,13 @@
   --vs-track-width: 14px;
   --vs-track-right: 2px;
   --vs-track-pad: 3px;
-  --vs-thumb-width: 6px;
-  --vs-thumb-width-active: 10px;
+  --vs-thumb-width: 7px;
+  --vs-thumb-width-active: 9px;
   --vs-thumb-min-height: 16px;
   --vs-thumb-radius: 999px;
-  --vs-thumb-bg: #c2c2c2;
+  --vs-thumb-bg: #c4c4c4;
   --vs-thumb-bg-hover: #909090;
-  --vs-thumb-bg-drag: #787878;
+  --vs-thumb-bg-drag: #828282;
   --vs-track-bg: transparent;
   --vs-track-bg-active: #f1f1f1;
   position: relative;
@@ -64,7 +64,8 @@ slot {
 
   & .thumb {
     position: absolute;
-    inset-inline-end: 2px;
+    inset-inline: 0;
+    margin-inline: auto;
     inset-block-start: var(--vs-track-pad);
     inline-size: var(--vs-thumb-width);
     block-size: var(--vs-thumb-min-height);

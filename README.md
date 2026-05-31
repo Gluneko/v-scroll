@@ -33,6 +33,17 @@ npm run dev
 - 使用 Vite 插件 `configResolved` 将 `src/v-scroll.css` 压缩并输出 `public/theme/v-scroll.js`。
 - 页面通过 `importmap` 提供 `$/` 映射，支持主题路径替换。
 
+## 关于 CSS 注入方式的说明
+
+题目提示「`import CSS` 后往 `document.head` 注入 style」。本实现里：
+
+- 光标变量（`--svgScroll` / `--svgGrab`）确实注入到 `document.head`（全局 `:root` 变量），见 `ensureGlobalStyle()`。
+- 组件外观 CSS（含 `:host` / `.bar` 等 Shadow DOM 内选择器）通过 `adoptedStyleSheets` 应用到 shadow root —— 因为 `:host`、`.bar` 这类选择器注入 `document.head` 不会作用到 Shadow DOM 内部。
+
+两种方式都满足核心诉求「改 importmap 即可切换主题」：CSS 被打包成 `export default '...'` 的 JS 模块，通过 importmap 的 `$/` 映射导入，更换 importmap 指向的主题目录即可换肤，组件代码零改动。
+
+选择 `adoptedStyleSheets` 还有额外收益：多个 `<v-scroll>` 实例可共享同一份 `CSSStyleSheet`（见 `SHARED_SHEET`），比每个实例克隆 `<style>` 更省内存；同时保留了在不支持该 API 时回退到 shadow root 内 `<style>` 的兼容分支。
+
 ## 部署建议
 
 ### GitHub Pages
