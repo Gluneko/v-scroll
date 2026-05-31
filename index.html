@@ -16,18 +16,18 @@
     <main class="app">
       <h1>原生 v-scroll 组件演示</h1>
       <section class="panel">
-        <h2>长列表（可滚动）</h2>
+        <h2>用例 1：长列表 — 滚动 / 拖拽 / 指针捕捉</h2>
         <v-scroll id="demo-a" class="box"></v-scroll>
       </section>
       <section class="panel">
-        <h2>短内容（无滚动条）</h2>
+        <h2>用例 2：短内容 — 无溢出自动隐藏</h2>
         <v-scroll id="demo-b" class="box box-sm">
           <p>只有几行内容时，自定义滚动条会自动隐藏。</p>
           <p>ResizeObserver 会持续探测高度差值。</p>
         </v-scroll>
       </section>
       <section class="panel">
-        <h2>动态内容</h2>
+        <h2>用例 3：动态内容 + 主题变量穿透 — ResizeObserver 实时自适应</h2>
         <button id="append-btn" type="button">追加 10 行</button>
         <v-scroll id="demo-c" class="box"></v-scroll>
       </section>
