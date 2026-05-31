@@ -44,6 +44,17 @@ npm run dev
 
 选择 `adoptedStyleSheets` 还有额外收益：多个 `<v-scroll>` 实例可共享同一份 `CSSStyleSheet`（见 `SHARED_SHEET`），比每个实例克隆 `<style>` 更省内存；同时保留了在不支持该 API 时回退到 shadow root 内 `<style>` 的兼容分支。
 
+## 关于内容投影结构的说明
+
+部分参考实现会把作者放入 `<v-scroll>` 的内容先包进一个**光 DOM 的 `<b>` 包裹层**，再把这个 `<b>` 投影进 `<slot>`；本实现则让作者内容（如 `<p>`）**直接作为光 DOM 子节点被 `<slot>` 投影**，不额外包裹。
+
+两者的 Shadow DOM 完全一致（`<b part="scroll">` → 内层 `block` 包裹 → `<slot>`，外加 `<b part="bar">`）。`<slot>` 投影的是单个节点还是多个节点，对布局与滚动没有区别：
+
+- `slot { display: contents }` 让 slot 自身不生成盒子，投影进来的内容直接当作内层包裹（`.inner`）的子级参与布局；
+- `.inner` 的 `scrollHeight` 正确反映内容高度，`ResizeObserver` 观测的就是它。
+
+因此有没有那层光 DOM 的 `<b>`，测量与滚动结果完全一致。本实现选择**不改写使用者传入的 DOM**：更符合 Web Components 不污染作者内容的封装直觉，结构也更简洁。唯一的理论差别是——若使用者写了 `v-scroll > p { … }` 这类直接子代选择器，两种结构命中情况不同；但这属于使用者自己的 CSS 习惯，组件本身不依赖它。
+
 ## 部署建议
 
 ### GitHub Pages
