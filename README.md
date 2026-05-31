@@ -62,5 +62,5 @@ npm run dev
 
 ## 提交清单
 
-- 仓库 URL：`<在此填写>`
-- 在线预览 URL：`<在此填写>`
+- 仓库 URL：https://github.com/Gluneko/v-scroll
+- 在线预览 URL：https://gluneko.github.io/v-scroll/
